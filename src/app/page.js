@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { FiCornerUpRight, FiRefreshCw, FiSearch } from "react-icons/fi";
+import toast from "react-hot-toast";
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -19,13 +20,16 @@ export default function HomePage() {
   const [activeMode, setActiveMode] = useState("conceptual");
   const router = useRouter();
 
+  const BASE_URL = "https://pdfreader2-imp3.onrender.com";
+  // const BASE_URL = "http://127.0.0.1:8000"; // Use this for local development
+
   const handleAsk = async (mode) => {
     if (!query.trim()) return;
 
     setLoading((prev) => ({ ...prev, [mode]: true }));
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/semantic-search", {
+      const res = await fetch(`${BASE_URL}/semantic-search`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query, mode }),
@@ -36,7 +40,17 @@ export default function HomePage() {
       const data = await res.json();
       setResponses((prev) => ({ ...prev, [mode]: data }));
     } catch (error) {
-      alert("Error: " + error.message);
+      // alert("Error: " + error.message);
+      toast.error("You've reached your token limit for today. Please come back tomorrow!", {
+        duration: 7000,
+        style: {
+          background: '#ff4d4f',
+          color: '#fff',
+          fontWeight: 'bold',
+        },
+        icon: '🚫',
+      });
+
     } finally {
       setLoading((prev) => ({ ...prev, [mode]: false }));
     }
@@ -157,11 +171,10 @@ export default function HomePage() {
       <section className="flex items-center gap-4 justify-center md:justify-start">
         <button
           onClick={() => setViewMode("single")}
-          className={`px-5 py-2 rounded-full font-semibold transition ${
-            viewMode === "single"
-              ? "bg-blue-600 text-white shadow-lg"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-          }`}
+          className={`px-5 py-2 rounded-full font-semibold transition ${viewMode === "single"
+            ? "bg-blue-600 text-white shadow-lg"
+            : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+            }`}
           aria-label="Single View Mode"
           title="Single View Mode"
         >
@@ -169,11 +182,10 @@ export default function HomePage() {
         </button>
         <button
           onClick={() => setViewMode("dual")}
-          className={`px-5 py-2 rounded-full font-semibold transition ${
-            viewMode === "dual"
-              ? "bg-blue-600 text-white shadow-lg"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
-          }`}
+          className={`px-5 py-2 rounded-full font-semibold transition ${viewMode === "dual"
+            ? "bg-blue-600 text-white shadow-lg"
+            : "bg-gray-200 text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+            }`}
           aria-label="Dual View Mode"
           title="Dual View Mode"
         >
