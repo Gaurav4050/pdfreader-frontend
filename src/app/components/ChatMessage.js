@@ -1,7 +1,21 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw';
+
 
 export default function ChatMessage({ query, summary, results }) {
+
+  const [reverseResults, setReverseResults] = React.useState([]);
+
+  React.useEffect(() => {
+    if (results && results.length > 0) {
+      // Reverse the results array
+      setReverseResults([...results].reverse());
+    }
+  }, [results]);
+
+
   return (
     <div className="space-y-4 rounded-xl border p-4 bg-gray-100 dark:bg-gray-800">
       <p>
@@ -11,15 +25,23 @@ export default function ChatMessage({ query, summary, results }) {
       <div>
         <strong>🤖 AI:</strong>
         <div className="prose prose-sm sm:prose-base dark:prose-invert mt-2">
-          <ReactMarkdown>{summary}</ReactMarkdown>
+          <div className="markdown">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+            >
+              {summary}
+            </ReactMarkdown>
+          </div>
+
         </div>
       </div>
 
-      {results?.length > 0 && (
+      {reverseResults?.length > 0 && (
         <div>
           <strong>📎 Related Docs:</strong>
           <ul className="list-disc ml-6 mt-2 space-y-1">
-            {results.map((result, idx) => (
+            {reverseResults.map((result, idx) => (
               <li key={idx}>
                 <a
                   href={`https://drive.google.com/file/d/${result.file_id.replace(".pdf", "")}/view`}
