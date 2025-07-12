@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 
 const loadingMessages = [
+  "🔄 Initializing...",
   "✅ Tokenization done",
   "✅ Stop words removed",
   "✅ Lemmatization complete",
@@ -29,7 +30,7 @@ export default function AnimatedLoadingText() {
         setIndex((prev) => prev + 1);
         setFade(false);
       }, 500);
-    }, 3000); // cycle every 3s
+    }, 2500); // cycle every 2.5s
 
     return () => clearInterval(interval);
   }, [index]);
