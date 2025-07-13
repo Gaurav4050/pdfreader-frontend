@@ -20,8 +20,8 @@ export default function HomePage() {
   const [activeMode, setActiveMode] = useState("conceptual");
   const router = useRouter();
 
-  const BASE_URL = "https://pdfreader2-imp3.onrender.com";
-  // const BASE_URL = "http://127.0.0.1:8000"; // Use this for local development
+  // const BASE_URL = "https://pdfreader2-imp3.onrender.com";
+  const BASE_URL = "http://127.0.0.1:8000"; // Use this for local development
 
   const handleAsk = async (mode) => {
     if (!query.trim()) return;
@@ -80,7 +80,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="flex flex-col md:flex-row justify-between items-center gap-4">
         <h1 className="text-4xl font-extrabold tracking-tight text-center md:text-left text-gray-900 dark:text-white">
-          Semantic Search Comparison
+          Bi Lingual Corpus Search
         </h1>
         <div className="flex gap-3">
           <button
