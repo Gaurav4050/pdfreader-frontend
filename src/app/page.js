@@ -35,8 +35,8 @@ export default function HomePage() {
   const inputRef = useRef(null);
   const resultsRef = useRef(null);
 
-  // const BASE_URL = "https://pdfreader2-imp3.onrender.com";
-  const BASE_URL = "http://127.0.0.1:8000";
+  const BASE_URL = "https://pdfreader2-imp3.onrender.com";
+  // const BASE_URL = "http://127.0.0.1:8000";
 
   // Scroll to top functionality
   useEffect(() => {
