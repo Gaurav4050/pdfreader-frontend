@@ -13,6 +13,9 @@ export default function EvaluateExcel() {
   const [mounted, setMounted] = useState(false);
   const [showGuideModal, setShowGuideModal] = useState(false);
 
+  const BASE_URL = "https://pdfreader2-imp3.onrender.com";
+  // const BASE_URL = "http://127.0.0.1:8000";
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -109,7 +112,7 @@ export default function EvaluateExcel() {
 
       // Uncomment for real API call
       const response = await axios.post(
-        "http://localhost:8000/evaluate-excel",
+        `${BASE_URL}/evaluate-excel`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
